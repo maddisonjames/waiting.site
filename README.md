@@ -1,3 +1,3 @@
 # waiting
-welcome to the registory,
+welcome to the repository,
 we waited a long time for you
