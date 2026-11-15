@@ -1,4 +1,4 @@
-import './assets/physics.js'; /* physics system */
+import './assets/physics.js';
 
 const style = document.createElement("style");
 
@@ -21,23 +21,7 @@ style.textContent = `
         height: 100%;
     }
 
-    #_kitty_background {
-        width: 100vw;
-        height: 100dvh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        border-radius: 0px;
-        opacity: 0;
-        background-image: url("./assets/other/kitties/background.jpg"); 
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        z-index: -1;
-    }
-
-    #_loading_box {
+    #_screen_cover {
         width: 100vw;
         height: 100dvh;
         background-color: rgb(255, 255, 255);
@@ -47,28 +31,6 @@ style.textContent = `
         pointer-events: none;
         border-radius: 0px;
         z-index: 1000;
-    }
-
-    #_loading_box.fade-out {
-        animation: flashAndFade 0.5s ease-in-out forwards;
-    }
-
-    @keyframes flashAndFade {
-        0% { opacity: 1; filter: brightness(1); }
-        25% { opacity: 1; filter: brightness(1.4); background-color: #ffffff; }
-        100% { opacity: 0; filter: brightness(1); }
-    }
-
-    #_cursor_box {
-        width: 15px;
-        height: 15px;
-        background-color: rgba(2, 1, 1, 0);
-        border: 2px solid #00b45a00;
-        position: absolute;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        border-radius: 0px;
-        z-index: 1001;
     }
 
     #_clock_base {
@@ -165,21 +127,6 @@ style.textContent = `
         pointer-events: none;
     }
 
-    #_secret_kitty {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 80px;
-        height: 80px;
-        background: transparent;
-        border: none;
-        outline: none;
-        opacity: 0;
-        pointer-events: auto;
-        cursor: url("./assets/other/kitties/cursor.png"), pointer; 
-        z-index: 999;
-    }
-
     #_win_border {
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
@@ -200,6 +147,31 @@ style.textContent = `
         padding: 3px;
         width: 590px;
     }
+    
+    #_win_border.plateformer_core {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        padding: 3px;
+        width: 520px;
+    }
+
+    #_win_border.plateformer_details {
+        position: fixed;
+        top: 40%;
+        left: 27.5%;
+        padding: 3px;
+        width: 200px;
+    }
+
+    #_win_border._notice {
+        position: fixed;
+        bottom: 4%;
+        left: 50%;
+        padding: 3px;
+        width: 350px;
+        height: 100px;
+    }
 
     #_win_border.maze_details {
         position: fixed;
@@ -207,6 +179,70 @@ style.textContent = `
         left: 27.5%;
         padding: 3px;
         width: 200px;
+    }
+
+    #_win_border.links {
+        position: fixed;
+        top: 6%;
+        left: 50%;
+        padding: 3px;
+        width: 350px;
+        height: 100px;
+    }
+
+    #_win_border._games {
+        position: fixed;
+        top: 50%;
+        right: 0.5%;
+        padding: 3px;
+        width: 200px;
+        height: 800px
+    }
+
+    #_youtube_link {
+        font-family: sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: underline;
+        transition: color 0.2s ease;
+        pointer-events: auto;
+    }
+
+    #_youtube_link:link {
+        color: #192cd3;
+    }
+    #_youtube_link:visited {
+        color: #d31941;
+    }
+
+    #_youtube_link:hover {
+        text-transform: uppercase;
+    }
+    #_youtube_link:active {
+        color: #19d395;
+    }
+    
+    #_kofi_link {
+        font-family: sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: underline;
+        transition: color 0.2s ease;
+        pointer-events: auto;
+    }
+
+    #_kofi_link:link {
+        color: #192cd3;
+    }
+    #_kofi_link:visited {
+        color: #d31941;
+    }
+
+    #_kofi_link:hover {
+        text-transform: uppercase;
+    }
+    #_kofi_link:active {
+        color: #19d395;
     }
 
     #_win_button {
@@ -295,11 +331,23 @@ style.textContent = `
         box-sizing: border-box;
     }
 
-    @font-face {
-        font-family: 'w95f';
-        src: url('./assets/fonts/W95F.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
+    #_screen_cover.fade-out {
+        animation: flashAndFade 0.5s ease-in-out forwards;
+    }
+
+    #_screen_cover.fade-in {
+        animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            filter: brightness(1);
+        }
+        100% {
+            opacity: 1;
+            filter: brightness(1);
+        }
     }
 
     @keyframes screen-shake {
@@ -310,13 +358,14 @@ style.textContent = `
         80% { transform: translate(4px, 6px); }
     }
 
-    .screen-shake {
-        animation: screen-shake 0.5s ease-in-out;
+    @keyframes flashAndFade {
+        0% { opacity: 1; filter: brightness(1); }
+        25% { opacity: 1; filter: brightness(1.4); background-color: #ffffff; }
+        100% { opacity: 0; filter: brightness(1); }
     }
 
-    .fade-in {
-        opacity: 0.85 !important;
-        pointer-events: auto !important;
+    .screen-shake {
+        animation: screen-shake 0.5s ease-in-out;
     }
 `;
 

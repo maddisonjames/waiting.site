@@ -7,13 +7,22 @@ import pyodide.code
 from pyodide.ffi import create_proxy
 
 print(f"// python run! //\n")
-print("## Created by Maddison James. An amalgomation of all the wacky ideas my brain can come up with. Code word is 'maze'. ##\n")
+print("## Created by Maddison James. An amalgomation of all the wacky ideas my brain can come up with. ##\n")
+
 _GLOBAL_PROXIES = {}
+_GLOBAL_ATTRIBUTES = []
+
 click_count = 0
+
 is_broken = False
+refreshing = False
+
 current_h_deg = 0
 current_m_deg = 0
 current_s_deg = 0
+
+plateformer_sequence = "pico"
+plateformer_index = 0
 
 maze_sequence = "maze"
 maze_index = 0
@@ -30,8 +39,9 @@ def change_website_icon(new_icon_path):
     print(f"Website icon changed to: {new_icon_path}")
 
 def event_occured():
-    core_attribute = document.getElementById("_core_attribute")
-    if core_attribute.classList.contains("_event_occured"):
+    global _GLOBAL_ATTRIBUTES
+
+    if "_event_occured" in _GLOBAL_ATTRIBUTES:
         return True
     else:
         return False
@@ -73,8 +83,36 @@ async def play_audio_with_fade_in(file_path, duration=2.0, steps=20, loop=True, 
         sound.volume = min(volume, sound.volume + volume_increment)
         await asyncio.sleep(sleep_time)
 
-def reload_page(event):
+async def reload_page(event):
+    global refreshing
+
+    refresh_container = document.querySelector(".refresh")
+
+    if not refresh_container or not refresh_container.classList.contains("open"):
+        return
+    if refreshing:
+        return
+
+    refreshing = True
+
+    snd_fade = Audio.new("./assets/other/sfxs/Windows Recycle.wav")
+    snd_fade.loop = False
+    snd_fade.volume = 0.75
+    snd_fade.play()
+
+    await asyncio.create_task(reveal_screen_cover())
+    await asyncio.sleep(0.5)
+
     window.location.reload()
+
+def youtube_link(event):
+    sound = Audio.new("./assets/other/sfxs/Windows Battery Low.wav")
+    sound.volume = 0.5
+    sound.play()
+def kofi_link(event):
+    sound = Audio.new("./assets/other/sfxs/Windows Battery Critical.wav")
+    sound.volume = 0.5
+    sound.play()
 
 def follow_cursor(event):
     hitbox = document.getElementById("_cursor_box")
@@ -87,21 +125,110 @@ def follow_cursor(event):
     hitbox.style.left = f"{x}px"
     hitbox.style.top = f"{y}px"
 
-async def launch_maze():
+async def launch_plateformer():
     try:
-        response = await window.fetch("./js/assets/render.js")
+        response = await window.fetch("./js/assets/plateform.js")
         
         if response.ok:
             js_code = await response.text()
             
             pyodide.code.run_js(js_code)
             
-            print("// Rendering initiated! //")
+            print("// 'plateform.js' initiated! //")
         else:
-            print(f"// Failed to initiate rendering system! HTTP Status: {response.status} //")
+            print(f"// Failed to initiate 'plateform.js'! HTTP Status: {response.status} //")
             
     except Exception as e:
-        print(f"// Failed to initiate rendering system! Error: {e} //")
+        print(f"// Failed to initiate 'plateform.js'! Error: {e} //")
+
+    plateformer_container = document.querySelector("#_win_container.plateformer_core")
+    if plateformer_container:
+        plateformer_container.style.display = "block"
+
+    plateformer_core_container = document.querySelector(".plateformer_core")
+    if plateformer_core_container:
+        await asyncio.sleep(0.02)
+
+        window.eval('document.querySelector(".plateformer_core").classList.add("open");')
+        
+    if hasattr(window, "initPlateformer"):
+        window.initPlateformer()
+
+    await asyncio.sleep(0.85)
+
+    clock_base = document.getElementById("_clock_base")
+    if clock_base:
+        clock_base.style.display = "none"
+
+    print("// plateformer initiated! //")
+
+async def check_plateformer_trigger(event):
+    global plateformer_index, is_broken, _GLOBAL_ATTRIBUTES
+
+    if is_broken or event_occured():
+        return
+    
+    char = event.key.lower()
+    
+    if char == plateformer_sequence[plateformer_index]:
+        plateformer_index += 1
+        #print(f"// maze progress: {plateformer_index}/4 //")
+        
+        snd_correct_sfx = False
+
+        if plateformer_index == 1:
+            snd_correct_sfx = Audio.new("./assets/other/sfxs/Windows Default.wav")
+        elif plateformer_index == 2:
+            snd_correct_sfx = Audio.new("./assets/other/sfxs/Windows Ding.wav")
+        elif plateformer_index == 3:
+            snd_correct_sfx = Audio.new("./assets/other/sfxs/Windows Error.wav")
+        elif plateformer_index == 4:
+            snd_correct_sfx = Audio.new("./assets/other/sfxs/Windows Exclamation.wav")
+
+        snd_correct_sfx.loop = False
+        snd_correct_sfx.volume = 0.25
+        snd_correct_sfx.play()
+        
+        if plateformer_index == len(plateformer_sequence):
+            is_broken = True
+
+            _GLOBAL_ATTRIBUTES.append("_event_occured")
+            
+            document.title = "plateformer"
+            change_website_icon("./assets/other/maze/smile.png")
+
+            refresh_container = document.querySelector(".refresh")
+            if refresh_container:
+                await asyncio.sleep(0.02)
+            
+                window.eval('document.querySelector(".refresh").classList.add("open");')
+            #asyncio.create_task(fade_in("refresh", target_opacity=1, duration=2.0))
+            
+            await launch_plateformer()
+            
+            plateformer_index = 0
+    else:
+        print(char)
+        if char == plateformer_sequence[0]:
+            plateformer_index = 1
+        else:
+            plateformer_index = 0
+
+async def launch_maze():
+    try:
+        response = await window.fetch("./js/assets/labyrinth.js")
+        
+        if response.ok:
+            js_code = await response.text()
+            
+            pyodide.code.run_js(js_code)
+            
+            print("// 'labyrinth.js' initiated! //")
+        else:
+            print(f"// Failed to initiate 'labyrinth.js'! HTTP Status: {response.status} //")
+            
+    except Exception as e:
+        print(f"// Failed to initiate 'labyrinth.js'! Error: {e} //")
 
     maze_container = document.querySelector("#_win_container.maze_core")
     if maze_container:
@@ -127,7 +254,8 @@ async def launch_maze():
     print("// labyrinth initiated! //")
 
 async def check_maze_trigger(event):
-    global maze_index, is_broken
+    global maze_index, is_broken, _GLOBAL_ATTRIBUTES
+
     if is_broken or event_occured():
         return
     
@@ -154,9 +282,8 @@ async def check_maze_trigger(event):
         
         if maze_index == len(maze_sequence):
             is_broken = True
-            
-            core_attribute = document.getElementById("_core_attribute")
-            core_attribute.classList.add("_event_occured")
+
+            _GLOBAL_ATTRIBUTES.append("_event_occured")
             
             document.title = "labyrinth"
             change_website_icon("./assets/other/maze/smile.png")
@@ -178,19 +305,22 @@ async def check_maze_trigger(event):
             maze_index = 0
 
 async def break_clock(event):
-    global is_broken, click_count
+    global is_broken, click_count, _GLOBAL_ATTRIBUTES
 
     if event_occured(): 
         return
     if is_broken:
         return
 
-    click_count += 1
-    if click_count >= 5:
+    snd_tap = Audio.new("./assets/other/sfxs/Windows Navigation Start.wav")
+    snd_tap.loop = False
+    snd_tap.volume = 0.65
+    snd_tap.play()
+
+    if click_count >= 4:
         is_broken = True
 
-        core_attribute = document.getElementById("_core_attribute")
-        core_attribute.classList.add("_event_occured")
+        _GLOBAL_ATTRIBUTES.append("_event_occured")
         
         clock_base = document.getElementById("_clock_base")
         pin = document.getElementById("center-pin")
@@ -198,7 +328,6 @@ async def break_clock(event):
         minute_hand = document.getElementById("minute-hand")
         second_hand = document.getElementById("second-hand")
 
-        # Trigger screen shake on the body (or your main wrapper)
         document.body.classList.add("screen-shake")
 
         snd_shatter = Audio.new("./assets/other/sfxs/glass_m1.ogg")
@@ -231,6 +360,8 @@ async def break_clock(event):
         #asyncio.create_task(fade_in("refresh", target_opacity=1, duration=2.0))
             
         print("// uh oh //")
+
+    click_count += 1
 
 def clock_system(event=None):
     if is_broken:
@@ -285,60 +416,55 @@ async def clock_ticker():
             
         await asyncio.sleep(1)
 
-async def remove_loading_screen():
-    loading_screen = document.getElementById("_loading_box")
+async def hide_screen_cover():
+    loading_screen = document.getElementById("_screen_cover")
     if loading_screen:
+        snd_fade = Audio.new("./assets/other/sfxs/Windows Print complete.wav")
+        snd_fade.loop = False
+        snd_fade.volume = 0.25
+        snd_fade.play()
+
         loading_screen.classList.add("fade-out")
         await asyncio.sleep(0.5)
-        loading_screen.remove()
+
+async def reveal_screen_cover():
+    loading_screen = document.getElementById("_screen_cover")
+    if loading_screen:
+        loading_screen.classList.remove("fade-out")
+        loading_screen.classList.add("fade-in")
+        await asyncio.sleep(0.5)
 
 def collapse(event):
     el = event.target.closest(".click-collapse")
     if el and (not hasattr(el.dataset, "physicsStarted") or not el.dataset.physicsStarted):
+        snd_tap = Audio.new("./assets/other/sfxs/Windows Startup.wav")
+        snd_tap.loop = False
+        snd_tap.volume = 0.65
+        snd_tap.play()
+
         el.classList.add("fall")
-
-async def create_kitty(event):
-    if event_occured(): 
-        return
-
-    bg_element = document.getElementById("_kitty_background")
-    
-    asyncio.create_task(play_audio_with_fade_in("./assets/other/sfxs/kitty_music.mp3", duration=2.0, loop=True, volume=0.5))
-    
-    if bg_element:
-        if not bg_element.classList.contains("kat_clicked__"):
-            core_attribute = document.getElementById("_core_attribute")
-            core_attribute.classList.add("_event_occured")
-
-            bg_element.classList.add("kat_clicked__")
-
-            change_website_icon("./assets/other/kitties/cursor.png")
-            
-            asyncio.create_task(fade_in("_kitty_background", target_opacity=1, duration=2.0))
-
-            await asyncio.sleep(3)
-            refresh_container = document.querySelector(".refresh")
-            if refresh_container:
-                await asyncio.sleep(0.02)
-                        
-                window.eval('document.querySelector(".refresh").classList.add("open");')
-            #asyncio.create_task(fade_in("refresh", target_opacity=1, duration=1.0))
-            print("\\ kats \\")
-        else:
-            print("\\ too many kats \\")
 
 def setup_listeners():
     #_GLOBAL_PROXIES["cursor"] = create_proxy(follow_cursor)
     _GLOBAL_PROXIES["reload"] = create_proxy(reload_page)
+
     _GLOBAL_PROXIES["clock"] = create_proxy(clock_system)
     _GLOBAL_PROXIES["break"] = create_proxy(break_clock)
     _GLOBAL_PROXIES["collapse"] = create_proxy(collapse)
+
     #_GLOBAL_PROXIES["kitty"] = create_proxy(create_kitty)
+
     _GLOBAL_PROXIES["maze_key"] = create_proxy(check_maze_trigger)
+    _GLOBAL_PROXIES["platformer_key"] = create_proxy(check_plateformer_trigger)
+
+    _GLOBAL_PROXIES["youtube_link"] = create_proxy(youtube_link)
+    _GLOBAL_PROXIES["kofi_link"] = create_proxy(kofi_link)
     
     #document.addEventListener("mousemove", _GLOBAL_PROXIES["cursor"])
     window.addEventListener("resize", _GLOBAL_PROXIES["clock"])
+
     document.addEventListener("keydown", _GLOBAL_PROXIES["maze_key"])
+    document.addEventListener("keydown", _GLOBAL_PROXIES["platformer_key"])
     
     pin = document.getElementById("center-pin")
     if pin:
@@ -347,6 +473,13 @@ def setup_listeners():
     refresh_btn = document.getElementById("_refresh_txt")
     if refresh_btn:
         refresh_btn.addEventListener("click", _GLOBAL_PROXIES["reload"])
+
+    youtube_btn = document.getElementById("_youtube_link")
+    kofi_btn = document.getElementById("_kofi_link")
+    if youtube_btn:
+        youtube_btn.addEventListener("click", _GLOBAL_PROXIES["youtube_link"])
+    if kofi_btn:
+        kofi_btn.addEventListener("click", _GLOBAL_PROXIES["kofi_link"])
       
     document.body.addEventListener("click", _GLOBAL_PROXIES["collapse"])
     
@@ -358,7 +491,7 @@ def setup_listeners():
 
 clock_system()
 asyncio.create_task(clock_ticker())
-asyncio.create_task(remove_loading_screen())
+asyncio.create_task(hide_screen_cover())
 
 if document.readyState == "complete":
     print("// site pre-loaded //")
