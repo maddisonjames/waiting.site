@@ -1,244 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A collection of wacky ideas.">
 
-        <title>waiting</title>
-        <link rel="icon" type="image/x-icon" href="./assets/core/clock_icon.png">
+    <title>HOLOPHRASE</title>
+    <link rel="icon" type="image/png" href="./assets/core/icons/core.png">
 
-        <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.1/core.css">
-        <script type="module" src="https://pyscript.net/releases/2026.7.1/core.js"></script>
+    <script type="module" src="./js/style.js?v=1000"></script>
+    <script type="module" src="./js/manager.js?v=1000"></script>
+    <script type="module" src="./js/desktop.js?v=1000"></script>
+    <script type="module" src="./js/updates.js?v=1000"></script>
+</head>
+<body>
+    <noscript>This site needs JavaScript to run.</noscript>
 
-        <script type="module"> import "./js/core.js?v=999"; </script>
-        <script type="py" src="./py/core.py"></script>
-    </head>
-    <body>
-        <div id="_screen_cover"></div>
+    <div id="_screen_cover"></div>
+    <span id="_version_title">ALPHA : Version 1.2</span>
 
-        <span id="_version_title">ALPHA : Version 1.1</span>
-        
-        <div id="_win_button" class="refresh">
-            <span id="_refresh_txt">refresh</span>
-        </div>
+    <!-- Refresh button -->
+    <div id="_refresh_button" class="win-button bevel-out refresh" role="button" tabindex="0">
+        <span id="_refresh_txt">refresh</span>
+    </div>
 
-        <div id="_win_border" class="links open">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">links.txt</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
+    <!-- Theme button -->
+    <div id="_theme_button" class="win-button bevel-out theme open" role="button" tabindex="0">
+        <span id="_theme_txt">Theme</span>
+    </div>
 
-            <div id="_links_container" style="position: relative; display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; font-family: sans-serif; font-size: 24px; font-weight: bold; width: 340px; height: 65px; background: #c0c0c0; margin: 4px 0 0 0; padding: 6px; box-sizing: border-box; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff; gap: 12px;">
-                <a id="_youtube_link" href="https://www.youtube.com/@maddymaddisonjames" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif;">youtube</a>
-                <a id="_kofi_link" href="https://discord.gg/feAzWTks68" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif;">discord</a>
-                <a id="_kofi_link" href="https://ko-fi.com/maddymaddison" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif;">ko-fi</a>
-            </div>
-        </div>
+    <!-- Updates button (opens updates.txt) -->
+    <div id="_updates_button" class="win-button bevel-out updates-btn open" role="button" tabindex="0" aria-label="Updates">
+        <span id="_updates_txt">Updates</span>
+        <span class="new-tag" aria-hidden="true">NEW</span>
+    </div>
 
-        <div id="_win_border" class="minesweeper_core" style="display: inline-block;">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">plateformer.exe</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_minesweeper_container" style="position: relative; width: 512px; height: 512px; background: #000; margin: 4px 0 0 0; padding: 0; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff;">
-                <canvas id="_minesweeper_canvas" width="128" height="128" style="width: 512px; height: 512px; display: block; image-rendering: pixelated; image-rendering: crisp-edges;"></canvas>
+    <!-- links.txt -->
+    <div class="win bevel-out links open">
+        <div class="win__title">
+            <span>links.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
             </div>
         </div>
+        <div class="win__body win__body--row win__body--short bevel-in">
+            <a id="_youtube_link" class="win-link" href="https://www.youtube.com/@maddymaddisonjames" target="_blank" rel="noopener noreferrer">youtube</a>
+            <a id="_discord_link" class="win-link" href="https://discord.gg/feAzWTks68" target="_blank" rel="noopener noreferrer">discord</a>
+            <a id="_kofi_link" class="win-link" href="https://ko-fi.com/maddymaddison" target="_blank" rel="noopener noreferrer">ko-fi</a>
+        </div>
+    </div>
 
-        <div id="_win_border" class="plateformer_core" style="display: inline-block;">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">plateformer.exe</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_plateformer_container" style="position: relative; width: 512px; height: 512px; background: #000; margin: 4px 0 0 0; padding: 0; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff;">
-                <canvas id="_plateformer_canvas" width="128" height="128" style="width: 512px; height: 512px; display: block; image-rendering: pixelated; image-rendering: crisp-edges;"></canvas>
+    <!-- minesweeper.exe -->
+    <div class="win bevel-out mine_core">
+        <div class="win__title">
+            <span>minesweeper.exe</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
             </div>
         </div>
-
-        <div id="_win_border" class="_notice">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">READ ME.txt</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_notice_container" style="position: relative; display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; font-family: sans-serif; font-size: 24px; font-weight: bold; width: 340px; height: 65px; background: #c0c0c0; margin: 4px 0 0 0; padding: 6px; box-sizing: border-box; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff; gap: 12px;">
-                 <span id="_notice" style="font-family: sans-serif;">This is a demo, not complete!</span>
+        <div id="_mine_container" class="win__body win__body--screen bevel-in">
+            <div class="screen-square">
+                <canvas id="_mine_canvas" class="screen-canvas" width="128" height="128"></canvas>
             </div>
         </div>
+    </div>
 
-        <div id="_win_border" class="plateformer_details">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">alert.exe</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_details_container" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; font-family: sans-serif; font-size: 24px; font-weight: bold; width: 190px; height: 100px; background: #c0c0c0; margin: 4px 0 0 0; padding: 8px; box-sizing: border-box; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff; gap: 4px;">
-                <span id="_finish" style="font-family: sans-serif;">YOU WIN!!!</span>
-                <span id="_deaths" style="font-family: sans-serif;">Deaths: N/A</span>
+    <!-- pico.exe -->
+    <div class="win bevel-out pico_core">
+        <div class="win__title">
+            <span>pico.exe</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
             </div>
         </div>
-
-        <div id="_win_border" class="maze_core">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">labyrinth.exe</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_maze_container" style="position: relative; width: 575px; height: 475px; background: #000; margin: 4px 0 0 0; padding: 0; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff;">
-                <canvas id="_maze_canvas" style="width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges;"></canvas>
+        <div id="_pico_container" class="win__body win__body--screen bevel-in">
+            <div class="screen-square">
+                <canvas id="_pico_canvas" class="screen-canvas" width="128" height="128"></canvas>
             </div>
         </div>
+    </div>
 
-        <div id="_win_border" class="maze_details">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">details.info</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_details_container" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; font-family: sans-serif; font-size: 24px; font-weight: bold; width: 190px; height: 100px; background: #c0c0c0; margin: 4px 0 0 0; padding: 8px; box-sizing: border-box; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff; gap: 4px;">
-                <span id="_level_txt" style="font-family: sans-serif;">Level: N/A</span>
-                <span id="_map_size_txt" style="font-family: sans-serif;">Map size: N/A</span>
+    <!-- READ ME.txt -->
+    <div class="win bevel-out _notice">
+        <div class="win__title">
+            <span>READ ME.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
             </div>
         </div>
-
-        <div id="_texture_slots" style="display: none;">
-            <img id="tex_ceiling" src="./assets/other/maze/stone_brick.png" alt="Ceiling Texture">
-            <img id="tex_wall" src="./assets/other/maze/brick.png" alt="Wall Texture">
-            <img id="tex_floor" src="./assets/other/maze/plank.png" alt="Floor Texture">
-            <img id="tex_smile" src="./assets/other/maze/smile.png" alt="Smile Texture">
-            <img id="tex_key" src="./assets/other/maze/keys.png" alt="key Texture">
-            <img id="tex_door" src="./assets/other/maze/door.png" alt="door Texture">
-
-            <img id="tex_equip_key" src="./assets/other/maze/keys.png" alt="equip key Texture">
-            <img id="tex_hand" src="./assets/other/maze/hand.png" alt="hand Texture">
+        <div id="_notice_container" class="win__body win__body--row win__body--short bevel-in">
+            <span id="_notice">This is a demo, not complete!</span>
         </div>
-        
-        <div id="_audio_slots" style="display: none;">
-            <audio id="snd_orb" src="./assets/other/sfxs/CY_MENUC.wav" preload="auto" type="audio/wav"></audio>
-            <audio id="snd_build" src="./assets/other/sfxs/AR_CRITI.WAV" preload="auto" type="audio/wav"></audio>
-            <audio id="snd_key" src="./assets/other/sfxs/PD_RINGO.WAV" preload="auto" type="audio/wav"></audio>
-            <audio id="snd_door" src="./assets/other/sfxs/hall_elev_door.wav" preload="auto" type="audio/wav"></audio>
-        </div>
+    </div>
 
-        <div id="_win_border" class="_games">
-            <div style="background: #000080; color: white; padding: 3px 5px; font-family: sans-serif; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; cursor: default;">
-                <span style="font-family: sans-serif;">Games.txt</span>
-                <div style="display: flex; gap: 2px;">
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-4px);">_</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">□</span>
-                    </button>
-                    <button style="background: #c0c0c0; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #808080; border-bottom: 1px solid #808080; width: 18px; height: 16px; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; line-height: 0; padding: 0; cursor: pointer;">
-                        <span style="transform: translateY(-1px);">×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="_games_container" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; font-family: sans-serif; font-size: 24px; font-weight: bold; width: 190px; height: 765px; background: #c0c0c0; margin: 4px 0 0 0; padding: 6px; box-sizing: border-box; border-top: 2px solid #808080; border-left: 2px solid #808080; border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff; gap: 4px;">
-               <span id="_title" style="font-family: sans-serif; font-size: 30px; color: #520909;">Type name of the game into your keyboard.</span>
-               <span id="_game" style="font-family: sans-serif;">maze</span>
-               <span id="_game" style="font-family: sans-serif;">pico</span>
+    <div class="win bevel-out pico_details">
+        <div class="win__title">
+            <span>details.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
             </div>
         </div>
-
-        <div id="_clock_base">
-            <div class="number" style="--i:1;"><div class="click-collapse">1</div></div>
-            <div class="number" style="--i:2;"><div class="click-collapse">2</div></div>
-            <div class="number" style="--i:3;"><div class="click-collapse">3</div></div>
-            <div class="number" style="--i:4;"><div class="click-collapse">4</div></div>
-            <div class="number" style="--i:5;"><div class="click-collapse">5</div></div>
-            <div class="number" style="--i:6;"><div class="click-collapse">6</div></div>
-            <div class="number" style="--i:7;"><div class="click-collapse">7</div></div>
-            <div class="number" style="--i:8;"><div class="click-collapse">8</div></div>
-            <div class="number" style="--i:9;"><div class="click-collapse">9</div></div>
-            <div class="number" style="--i:10;"><div class="click-collapse">10</div></div>
-            <div class="number" style="--i:11;"><div class="click-collapse">11</div></div>
-            <div class="number" style="--i:12;"><div class="click-collapse">12</div></div>
-
-            <div id="hour-hand" class="hand"></div>
-            <div id="minute-hand" class="hand"></div>
-            <div id="second-hand" class="hand"></div>
-            <div id="center-pin"></div>
+        <div class="win__body win__body--col win__body--medium bevel-in">
+            <span id="_level">Level: N/A</span>
+            <span id="_deaths">Deaths: N/A</span>
         </div>
-    </body>
+    </div>
+
+    <!-- labyrinth.exe -->
+    <div class="win bevel-out maze_core">
+        <div class="win__title">
+            <span>labyrinth.exe</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
+            </div>
+        </div>
+        <div id="_maze_container" class="win__body win__body--screen bevel-in">
+            <div class="screen-maze">
+                <canvas id="_maze_canvas" class="screen-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="win bevel-out maze_details">
+        <div class="win__title">
+            <span>details.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
+            </div>
+        </div>
+        <div class="win__body win__body--col win__body--medium bevel-in">
+            <span id="_level_txt">Level: N/A</span>
+            <span id="_map_size_txt">Map size: N/A</span>
+        </div>
+    </div>
+
+    <!-- Games.txt -->
+    <div class="win bevel-out _games">
+        <div class="win__title">
+            <span>Games.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
+            </div>
+        </div>
+        <div class="win__body win__body--col win__body--fill bevel-in">
+            <span id="_title" class="games-title">Type a game's name on your keyboard, or click it.</span>
+            <button class="game-name" type="button" data-game="maze">maze</button>
+            <button class="game-name" type="button" data-game="pico">pico</button>
+            <button class="game-name" type="button" data-game="mine">mine</button>
+        </div>
+    </div>
+
+    <!-- updates.txt (filled in by js/updates.js) -->
+    <div class="win bevel-out updates" data-quiet-close>
+        <div class="win__title">
+            <span>updates.txt</span>
+            <div class="win__controls">
+                <button class="win__btn win__btn--min" type="button" aria-label="Minimise">_</button>
+                <button class="win__btn" type="button" aria-label="Maximise">□</button>
+                <button class="win__btn" type="button" aria-label="Close">×</button>
+            </div>
+        </div>
+        <div class="win__body win__body--log">
+            <nav class="log-list bevel-in" role="tablist" aria-label="Versions" aria-orientation="vertical"></nav>
+            <article class="log-page bevel-in" tabindex="0" aria-label="Update notes"></article>
+        </div>
+    </div>
+
+    <!-- The clock -->
+    <div id="_clock_base">
+        <div class="number" style="--i:1;"><div class="click-collapse"><span style="--i:1;">1</span></div></div>
+        <div class="number" style="--i:2;"><div class="click-collapse"><span style="--i:2;">2</span></div></div>
+        <div class="number" style="--i:3;"><div class="click-collapse"><span style="--i:3;">3</span></div></div>
+        <div class="number" style="--i:4;"><div class="click-collapse"><span style="--i:4;">4</span></div></div>
+        <div class="number" style="--i:5;"><div class="click-collapse"><span style="--i:5;">5</span></div></div>
+        <div class="number" style="--i:6;"><div class="click-collapse"><span style="--i:6;">6</span></div></div>
+        <div class="number" style="--i:7;"><div class="click-collapse"><span style="--i:7;">7</span></div></div>
+        <div class="number" style="--i:8;"><div class="click-collapse"><span style="--i:8;">8</span></div></div>
+        <div class="number" style="--i:9;"><div class="click-collapse"><span style="--i:9;">9</span></div></div>
+        <div class="number" style="--i:10;"><div class="click-collapse"><span style="--i:10;">10</span></div></div>
+        <div class="number" style="--i:11;"><div class="click-collapse"><span style="--i:11;">11</span></div></div>
+        <div class="number" style="--i:12;"><div class="click-collapse"><span style="--i:12;">12</span></div></div>
+
+        <div id="hour-hand" class="hand"></div>
+        <div id="minute-hand" class="hand"></div>
+        <div id="second-hand" class="hand"></div>
+        <div id="center-pin"></div>
+    </div>
+</body>
 </html>
